@@ -13,8 +13,9 @@ const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
 
-    const httpServer = createServer(app.getRequestHandler());
+    const httpServer = createServer(handle);
     const io = new Server(httpServer);
+
     io.on("connection", (socket) => {
         console.log(`User connected: ${socket.id}`);
 
@@ -24,7 +25,12 @@ app.prepare().then(() => {
             socket.to(room).emit("user_joined", ` ${username} joined room ${room}`);
         })
 
-        io.on("disconnect", (socket) => {
+        socket.on("message", ({ room, message, sender }) => {
+            console.log(`User ${sender} sent message: ${message} in room ${room}`);
+            socket.to(room).emit('message', { sender, message })
+        })
+
+        socket.on("disconnect", () => {
             console.log(`User disconnected: ${socket.id}`);
         })
     });

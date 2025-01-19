@@ -1,24 +1,45 @@
 "use client";
 import { ChatForm } from "@/components/ChartForm";
 import ChartMessage from "@/components/ChartMessage";
-import { useState } from "react";
+import { socket } from "@/lib/socketClient";
+import { useEffect, useState } from "react";
 
 export default function Home() {
 
   const [messages, setMessages] = useState<
     { sender: string, message: string }[]>([]);
-  const [roon, setRoon] = useState("");
+  const [room, setRoom] = useState("");
   const [joined, setJoined] = useState(false);
   const [userName, setUserName] = useState("");
 
+
+
   const handleJoinRoom = () => {
-    if (userName && roon) {
-      setJoined(true)
+    if (userName && room) {
+      socket.emit("join-room", { room, username: userName });
+      setJoined(true);
     }
   };
   const handleSendMessage = (message: string) => {
-    console.log("msn", message);
+    const data = { room, message, sender: userName };
+    setMessages((prev)=>[...prev, {sender:userName, message }])
+    socket.emit("message", data);
   };
+
+  useEffect(() => {
+    socket.on("message", (data) => {
+      setMessages((prev) => [...prev, data])
+    })
+
+    socket.on("user_joined", (message) => {
+      setMessages((prev) => [...prev, { sender: "system", message }])
+    })
+
+    return () => {
+      socket.off("user_joined")
+      socket.off("message")
+    }
+  }, [])
 
   return (
     <div className="flex mt-24 justify-center w-full">
@@ -35,14 +56,14 @@ export default function Home() {
           <input
             type="text"
             placeholder="Enter room name"
-            value={roon}
-            onChange={(e) => setRoon(e.target.value)}
+            value={room}
+            onChange={(e) => setRoom(e.target.value)}
             className="w-64 px-4 py-2 mb-4 border-2 rounded-lg"
           />
 
           <button
-          onClick={handleJoinRoom}
-          className="px-4 py-2 text-white bg-blue-500 rounded-lg"
+            onClick={handleJoinRoom}
+            className="px-4 py-2 text-white bg-blue-500 rounded-lg"
           >
             Join Room
           </button>
