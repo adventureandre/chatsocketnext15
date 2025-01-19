@@ -1,5 +1,5 @@
-"use client"
-import { FormEvent, useState } from "react"
+"use client";
+import { FormEvent, useState } from "react";
 
 export const ChatForm = ({
     onSendMessage
@@ -8,16 +8,16 @@ export const ChatForm = ({
 
 }) => {
 
-    const [message, setMessage] = useState("")
+    const [message, setMessage] = useState("");
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (message.trim() !== "") {
-            onSendMessage(message)
-            setMessage("")
+            onSendMessage(message);
+            setMessage("");
         }
     
-    }
+    };
 
     return (
         <form onSubmit={handleSubmit} className="flex gap-2 mt-4">
@@ -29,6 +29,6 @@ export const ChatForm = ({
             />
             <button type="submit" className="px-4 py-2 text-white rounded-lg bg-blue-500">Enviar</button>
         </form>
-    )
-}
+    );
+};
 

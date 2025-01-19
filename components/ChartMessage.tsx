@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 interface ChatMessageProps {
   sender: string;
@@ -11,9 +11,9 @@ const ChartMessage = ({ isOwnMessege, message, sender }: ChatMessageProps) => {
   return (
     <div className={`flex ${
         isSystemMessage
-        ? 'justify-center'
+        ? "justify-center"
         : isOwnMessege
-        ? 'justify-end'
+        ? "justify-end"
         : "justify-start"
       } mb-3`}
     >
@@ -28,7 +28,7 @@ const ChartMessage = ({ isOwnMessege, message, sender }: ChatMessageProps) => {
       </div>
 
     </div>
-  )
-}
+  );
+};
 
-export default ChartMessage
+export default ChartMessage;
