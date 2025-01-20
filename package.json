@@ -7,12 +7,11 @@
     "dev:socket": "NODE_OPTIONS='--loader ts-node/esm --trace-warnings --no-warnings' ts-node server.mts",
     "build": "next build",
     "build:socket": "next build && tsc --project tsconfig.server.json",
-    "start:normal": "next start",
-    "start": "NODE_ENV=production node dist/server.mjs",
+    "start": "next start",
+    "start:socket": "NODE_ENV=production node dist/server.mjs",
     "lint": "next lint"
   },
   "dependencies": {
-    "autoprefixer": "^10.4.20",
     "next": "15.1.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -27,8 +26,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.3",
-    "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.17",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
 }
