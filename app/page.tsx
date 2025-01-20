@@ -20,6 +20,7 @@ export default function Home() {
       setJoined(true);
     }
   };
+  
   const handleSendMessage = (message: string) => {
     const data = { room, message, sender: userName };
     setMessages((prev)=>[...prev, {sender:userName, message }])
@@ -71,7 +72,7 @@ export default function Home() {
         </div>
       ) : (
         <div className="w-full max-w-3xl mx-auto">
-          <h1 className="mb-4 text-2xl font-bold">Room: 1</h1>
+          <h1 className="mb-4 text-2xl font-bold">Room: {room}</h1>
           <div className="h-[500px] overflow-y-auto p-4 mb-4 bg-gray-200 border-2 rounded-lg">
             {messages.map((msn, index) => (
               <ChartMessage

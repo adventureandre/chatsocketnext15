@@ -10,13 +10,13 @@ export const ChatForm = ({
 
     const [message, setMessage] = useState("");
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         if (message.trim() !== "") {
             onSendMessage(message);
             setMessage("");
         }
-    
+
     };
 
     return (
@@ -24,6 +24,7 @@ export const ChatForm = ({
             <input
                 className="flex-1 px-4 border-2 py-2 rounded-lg focus:outline-none"
                 type="text"
+                value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type your messsage here..."
             />
